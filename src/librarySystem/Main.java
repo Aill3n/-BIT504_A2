@@ -138,7 +138,7 @@ public class Main {
                 }
                 case 2 -> {
                     System.out.println("Displaying add a member menu.");
-                    MemberMenu.addNewMember(MemberList);
+                    MemberMenu.addNewMember(MemberList, scanner);
                 }
                 case 3 -> {
                     System.out.println("Returning to the main menu.");
