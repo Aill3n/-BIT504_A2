@@ -15,6 +15,7 @@ public class Book {
     private String dateOfPublication;
     private String genre;
     private int ageRating;
+    private boolean isBorrowed;
 
     // Constructor
     public Book(String id, String isbn, String title, String author, String dateOfPublication, String genre,
@@ -26,6 +27,7 @@ public class Book {
         this.dateOfPublication = dateOfPublication;
         this.genre = genre;
         this.ageRating = ageRating;
+        this.isBorrowed = false;
     }
 
     // Getters and Setters
@@ -71,6 +73,13 @@ public class Book {
     public void setAgeRating(int ageRating) {
         this.ageRating = ageRating;
     }
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+    public void setBorrowed(boolean isBorrowed) {
+        this.isBorrowed = isBorrowed;
+    }
+
 
     // Functions
       /*
