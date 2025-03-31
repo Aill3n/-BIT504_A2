@@ -51,8 +51,4 @@ public class Member {
     public void setAge(int age) {
         this.age = age;
     }
-
-    public char[] getMembers() {
-        return ("Member [Id=" + Id + ", firstName=" + firstName + ", LastName=" + LastName + ", age=" + age + "]").toCharArray();
-    }
 }
