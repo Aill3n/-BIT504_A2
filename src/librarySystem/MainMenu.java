@@ -50,7 +50,7 @@ public class MainMenu {
                 """);
     }
 
-    public static void loanManagementMenu() {
+    public static void printLoanManagementMenu() {
         System.out.println("""
 
                 - - - - - - - - - - - - - - -
