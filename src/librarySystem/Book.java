@@ -16,6 +16,7 @@ public class Book {
     private String genre;
     private int ageRating;
     private boolean isBorrowed;
+    private String borrowedByMemberId;
 
     // Constructor
     public Book(String id, String isbn, String title, String author, String dateOfPublication, String genre,
@@ -32,6 +33,9 @@ public class Book {
 
     // Getters and Setters
     public String getId() {
+        return id;
+    }
+    public static String getId(String id) {
         return id;
     }
     public void setId(String id) {
@@ -79,17 +83,11 @@ public class Book {
     public void setBorrowed(boolean isBorrowed) {
         this.isBorrowed = isBorrowed;
     }
-
-
-    // Functions
-      /*
-    private void addNewBook(){
-    User can add a new book successfully. 
-    Validation is performed. 
-    ID and ISBN must be unique.
-    Warnings are correctly displayed.
-    Good programming practices  and standards have been followed throughout the code.
+    public String getBorrowedByMemberId() {
+        return borrowedByMemberId;
     }
-    */
-    
+
+    public void setBorrowedByMemberId(String borrowedByMemberId) {
+        this.borrowedByMemberId = borrowedByMemberId;
+    }
 }

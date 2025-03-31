@@ -65,7 +65,8 @@ public class Main {
                         MainMenu.printMemberManagementMenu();
                         loadMemberManagementMenu(scanner);
                     }
-                    case 3 -> MainMenu.printLoanManagementMenu();
+                    case 3 -> {MainMenu.printLoanManagementMenu();
+                        loadLoanManagementMenu(scanner);}
                     case 4 -> MainMenu.searchMenu();
                     case 5 -> {
                         System.out.println("Exiting the program. Goodbye!");
@@ -173,13 +174,13 @@ public class Main {
 
             switch (subMenuChoice) {
                 case 1 -> {
-                    System.out.println("Displaying the menu 'Check out a book'.");
-                    LoanManagementMenu.checkOutBook(BookList);
+                    System.out.println("\n Displaying the menu 'Check out a book'. \n");
+                    LoanManagementMenu.checkOutBook(BookList, MemberList, scanner);
                     MainMenu.printLoanManagementMenu();
                 }
                 case 2 -> {
-                    System.out.println("Displaying the menu 'Check in a book'.");
-                    LoanManagementMenu.checkInBook(BookList);
+                    System.out.println("\n Displaying the menu 'Check in a book'. \n");
+                    LoanManagementMenu.checkInBook(BookList, MemberList, scanner);
                     MainMenu.printLoanManagementMenu();
                 }
                 case 3 -> {
