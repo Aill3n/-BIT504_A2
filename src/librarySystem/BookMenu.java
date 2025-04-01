@@ -65,37 +65,82 @@ public class BookMenu {
     }
 
     public static void addNewBook(List<Book> bookList, Scanner scanner) {
-        //TODO: Aillen add validations
-        
+        //user should be asked to enter the value again.
+
         System.out.println("ADD A NEW BOOK MENU. \n");
 
         System.out.println("Please enter the book ID, it has to be unique:");
         String id = scanner.nextLine();
 
+        for (Book book : bookList) {
+            if (id.equals(book.getId())) {
+                System.out.println("Id must be unique. Try again.");
+                return;
+            }
+        }
+        if (MemberMenu.validateBlankField(id)) {
+            return;
+        }
+
         System.out.println("Please enter the book ISBN:");
         String isbn = scanner.nextLine();
+        for (Book book : bookList) {
+            if (isbn.equals(book.getIsbn())) {
+                System.out.println("Id must be unique. Try again.");
+                return;
+            }
+            if (isbn.length() != 10) {
+                System.out.println("ISBN should contain 10 characters.");
+                return;
+            }
+        }
+        if (MemberMenu.validateBlankField(isbn)) {
+            return;
+        }
 
         System.err.println("Please enter the book title:");
         String title = scanner.nextLine();
+        if (MemberMenu.validateBlankField(title)) {
+            return;
+        }
 
         System.out.println("Please enter the book author:");
         String author = scanner.nextLine();
+        if (MemberMenu.validateBlankField(author)) {
+            return;
+        }
 
         System.out.println("Please enter the book date of publication:");
         String dateOfPublication = scanner.nextLine();
+        if (MemberMenu.validateBlankField(dateOfPublication)) {
+            return;
+        }
 
         System.out.println("Please enter the book genre:");
         String genre = scanner.nextLine();
+        if (MemberMenu.validateBlankField(genre)) {
+            return;
+        }
 
         System.out.println("Please enter the book age rating:");
 
         while (!scanner.hasNextInt()) {
-            System.out.println("Invalid input. Please enter an integer for age rating.");
-            scanner.next(); // Consume invalid input
+            System.out.println("The age rating must be a number.");
+            scanner.next(); // consume enter key
         }
 
-        int ageRating = scanner.nextInt();
-        scanner.nextLine(); // Consume newline after integer input
+        int ageRating;
+        if (!scanner.hasNextInt()) {
+            System.out.println("Age must only contain numbers.");
+            scanner.next(); // consume invalid input
+            return;
+        }
+        ageRating = scanner.nextInt();
+        if (!MemberMenu.ageValidation(ageRating)) {
+            return;
+        }
+    
+        scanner.nextLine();
 
         Book book = new Book(id, isbn, title, author, dateOfPublication, genre, ageRating);
 
@@ -108,13 +153,13 @@ public class BookMenu {
     }
 
     public static void bookHeader() {
-        String id =TableUtil.formatTable(" ID", 4);
-        String isbn =TableUtil.formatTable(" ISBN", 22);
-        String title =TableUtil.formatTable(" Title", 28);
-        String author =TableUtil.formatTable(" Author", 22);
-        String dateOfPublication =TableUtil.formatTable(" Date of Publication", 21);
-        String genre =TableUtil.formatTable(" Genre", 21);
-        String ageRating =TableUtil.formatTable(" Age Rating", 12);
+        String id = TableUtil.formatTable(" ID", 4);
+        String isbn = TableUtil.formatTable(" ISBN", 22);
+        String title = TableUtil.formatTable(" Title", 28);
+        String author = TableUtil.formatTable(" Author", 22);
+        String dateOfPublication = TableUtil.formatTable(" Date of Publication", 21);
+        String genre = TableUtil.formatTable(" Genre", 21);
+        String ageRating = TableUtil.formatTable(" Age Rating", 12);
 
         List<String> headers = List.of(id, isbn, title, author, dateOfPublication, genre, ageRating);
 

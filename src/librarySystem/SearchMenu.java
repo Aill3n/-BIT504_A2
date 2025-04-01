@@ -55,15 +55,7 @@ public class SearchMenu {
         for (Book book : bookList) {
             if (book.getTitle().toLowerCase().contains(bookTitle.trim().toLowerCase())) {
                 bookFound = true;
-                System.out.println("Book Details:");
-                System.out.println("\n- Id: " + book.getId());
-                System.out.println("- ISBN: " + book.getIsbn());
-                System.out.println("- Title: " + book.getTitle());
-                System.out.println("- Author: " + book.getAuthor());
-                System.out.println("- Publish date: " + book.getDateOfPublication());
-                System.out.println("- Genre: " + book.getGenre());
-                System.out.println("- Age rating: " + book.getAgeRating());
-
+                printBookInformation(book);
                 boolean memberFound = false;
                 for (Member member : memberList) {
                     if (book.getBorrowedByMemberId() != null && book.getBorrowedByMemberId().equals(member.getId())) {
@@ -81,5 +73,16 @@ public class SearchMenu {
         if (!bookFound) {
             System.out.println("Book not found. \n");
         }
+    }
+
+    public static void printBookInformation(Book book){
+        System.out.println("Book Details:");
+        System.out.println("\n- Id: " + book.getId());
+        System.out.println("- ISBN: " + book.getIsbn());
+        System.out.println("- Title: " + book.getTitle());
+        System.out.println("- Author: " + book.getAuthor());
+        System.out.println("- Publish date: " + book.getDateOfPublication());
+        System.out.println("- Genre: " + book.getGenre());
+        System.out.println("- Age rating: " + book.getAgeRating());
     }
 }
