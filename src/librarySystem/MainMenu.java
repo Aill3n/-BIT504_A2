@@ -65,7 +65,7 @@ public class MainMenu {
                 """);
     }
 
-    public static void searchMenu() {
+    public static void printSearchMenu() {
         System.out.println("""
 
                 - - - - - - - - - - - - - - -

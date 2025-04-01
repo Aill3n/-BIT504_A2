@@ -6,8 +6,10 @@ import java.util.Scanner;
 public class LoanManagementMenu {
 
     public static void checkOutBook(List<Book> bookList, List<Member> memberList, Scanner scanner) {
+        
         System.out.println("\nBook ID to check out:\n");
-        String bookIdInput = scanner.nextLine().trim();
+        String bookIdInput = scanner.nextLine();
+
         System.out.println("\nMember ID to check out:\n");
         String memberIdInput = scanner.nextLine();
 
