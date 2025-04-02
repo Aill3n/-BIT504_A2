@@ -1,3 +1,9 @@
+/* 
+BIT504 A2
+Aillen Teixeira 
+Student ID: 2021712
+*/
+
 package librarySystem;
 
 import java.util.List;
@@ -29,7 +35,7 @@ public class LoanManagementMenu {
         }
 
         if (foundMember == null) {
-            System.out.println("No member found with this id.");
+            System.out.println("No member found with this id.\n");
             return;
         }
 
@@ -40,13 +46,13 @@ public class LoanManagementMenu {
 
         // Validate if the book has been borrowed
         if (foundBook.isBorrowed()) {
-            System.out.println("This book has been borrowed. Please chose another book.");
+            System.out.println("This book has been borrowed. Please chose another book.\n");
             return;
         }
 
         // Validate age criteria
         if (foundBook.getAgeRating() > memberAge) {
-            System.out.println("The member doesn't fit the age rating criteria.");
+            System.out.println("The member doesn't fit the age rating criteria.\n");
             return;
         }
 
@@ -81,14 +87,14 @@ public class LoanManagementMenu {
             return;
         }
 
-        System.out.println("Would you like to proceed? Enter 'yes' or 'no'.");
+        System.out.println("Would you like to proceed? Enter 'yes' or 'no'.\n");
         String confirmation = scanner.nextLine().toLowerCase();
 
         // Check in the book upon confirmation
         if (confirmation.equals("yes")) {
             foundBook.setBorrowed(false);
             foundBook.setBorrowedByMemberId(null);
-            System.out.println("The book has been successfully checked in.");
+            System.out.printf("The book %s has been successfully checked in.\n", foundBook.getTitle());
 
         } else {
             System.out.println("Canceling operation.");
