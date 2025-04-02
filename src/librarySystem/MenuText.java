@@ -1,7 +1,9 @@
 package librarySystem;
 
 
-public class MainMenu {
+public class MenuText {
+    // Print the options for each menu
+
     public static void printMainMenu() {
         System.out.println("""
                 - - - - - - - - - - - - - - -

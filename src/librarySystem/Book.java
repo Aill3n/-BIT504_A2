@@ -87,6 +87,7 @@ public class Book {
         return borrowedByMemberId;
     }
 
+    // When a book is borrowed sets the member Id
     public void setBorrowedByMemberId(String borrowedByMemberId) {
         this.borrowedByMemberId = borrowedByMemberId;
     }

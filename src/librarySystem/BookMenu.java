@@ -14,9 +14,10 @@ public class BookMenu {
 
     public static void displayAllBooks(List<Book> bookList) {
         bookHeader();
-
+        // Print all the books
         for (Book book : bookList) {
 
+            // Set a length for the column
             String bookId = TableUtil.formatTwoDigitColumnString(book.getId(), 2);
             String bookIsbn = TableUtil.formatTable(book.getIsbn(), 20);
             String bookTitle = TableUtil.formatTable(book.getTitle(), 26);
@@ -42,6 +43,7 @@ public class BookMenu {
     public static void displayBorrowedBooks(List<Book> bookList) {
         System.out.println("Displaying all the borrowed books in the system.");
 
+        // Filters for only books that have been borrowed
         List<Book> borrowedBooks = bookList.stream().filter(Book::isBorrowed).toList();
 
         if (borrowedBooks.isEmpty()) {
@@ -55,6 +57,7 @@ public class BookMenu {
     public static void displayUnborrowedBooks(List<Book> bookList) {
         System.out.println("Displaying all the unborrowed books in the system.");
 
+        // Filters for books that have not been borrowed
         List<Book> borrowedBooks = bookList.stream().filter(book -> !book.isBorrowed()).toList();
 
         if (borrowedBooks.isEmpty()) {
@@ -65,94 +68,57 @@ public class BookMenu {
     }
 
     public static void addNewBook(List<Book> bookList, Scanner scanner) {
-        //user should be asked to enter the value again.
+            // Book ID
+            System.out.println("Please enter the book ID, it has to be unique:");
+            String id = scanner.nextLine();
+            validateId(id, scanner, bookList);
 
-        System.out.println("ADD A NEW BOOK MENU. \n");
+            // ISBN
+            System.out.println("Please enter the book ISBN:");
+            String isbn = scanner.nextLine().trim();
+            isbnValidation(isbn, scanner, bookList);
 
-        System.out.println("Please enter the book ID, it has to be unique:");
-        String id = scanner.nextLine();
+            // Title
+            System.out.println("Please enter the book title:");
+            String title = scanner.nextLine().trim();
+            MemberMenu.validateBlankField(title, scanner);
 
-        for (Book book : bookList) {
-            if (id.equals(book.getId())) {
-                System.out.println("Id must be unique. Try again.");
-                return;
+            // Author
+            System.out.println("Please enter the book author:");
+            String author = scanner.nextLine().trim();
+            MemberMenu.validateBlankField(author, scanner);
+
+            // Date of Publication
+            System.out.println("Please enter the book date of publication:");
+            String dateOfPublication = scanner.nextLine().trim();
+            MemberMenu.validateBlankField(dateOfPublication, scanner);
+
+            // Genre
+            System.out.println("Please enter the book genre:");
+            String genre = scanner.nextLine().trim();
+            MemberMenu.validateBlankField(genre, scanner);
+
+            // Age rating
+            System.out.println("Please enter the book age rating:");
+            String age = scanner.nextLine().trim();
+            int treatedAge = MemberMenu.ageRangeValidation(age, scanner);
+
+            // Create book object with given input
+            Book book = new Book(id, isbn, title, author, dateOfPublication, genre, treatedAge);
+
+            // Add book to the end of the list
+            bookList.add(book);
+
+            // Confirm book has been added
+            if (bookList.get(bookList.size() - 1).getId().trim().equals(id.trim())) {
+                System.out.println("\nThe book has been added successfully!");
+            } else {
+                System.out.println("Failed to add the book. Please try again.");
             }
-        }
-        if (MemberMenu.validateBlankField(id)) {
-            return;
-        }
-
-        System.out.println("Please enter the book ISBN:");
-        String isbn = scanner.nextLine();
-        for (Book book : bookList) {
-            if (isbn.equals(book.getIsbn())) {
-                System.out.println("Id must be unique. Try again.");
-                return;
-            }
-            if (isbn.length() != 10) {
-                System.out.println("ISBN should contain 10 characters.");
-                return;
-            }
-        }
-        if (MemberMenu.validateBlankField(isbn)) {
-            return;
-        }
-
-        System.err.println("Please enter the book title:");
-        String title = scanner.nextLine();
-        if (MemberMenu.validateBlankField(title)) {
-            return;
-        }
-
-        System.out.println("Please enter the book author:");
-        String author = scanner.nextLine();
-        if (MemberMenu.validateBlankField(author)) {
-            return;
-        }
-
-        System.out.println("Please enter the book date of publication:");
-        String dateOfPublication = scanner.nextLine();
-        if (MemberMenu.validateBlankField(dateOfPublication)) {
-            return;
-        }
-
-        System.out.println("Please enter the book genre:");
-        String genre = scanner.nextLine();
-        if (MemberMenu.validateBlankField(genre)) {
-            return;
-        }
-
-        System.out.println("Please enter the book age rating:");
-
-        while (!scanner.hasNextInt()) {
-            System.out.println("The age rating must be a number.");
-            scanner.next(); // consume enter key
-        }
-
-        int ageRating;
-        if (!scanner.hasNextInt()) {
-            System.out.println("Age must only contain numbers.");
-            scanner.next(); // consume invalid input
-            return;
-        }
-        ageRating = scanner.nextInt();
-        if (!MemberMenu.ageValidation(ageRating)) {
-            return;
-        }
-    
-        scanner.nextLine();
-
-        Book book = new Book(id, isbn, title, author, dateOfPublication, genre, ageRating);
-
-        bookList.add(book);
-        if (bookList.stream().anyMatch(b -> b.getId().trim().equals(id.trim()))) {
-            System.out.println("\nThe book has been added successfully!");
-        } else {
-            System.out.println("Failed to add the book. Please try again.");
-        }
     }
 
     public static void bookHeader() {
+        // Print the header for the book table with set sizes
         String id = TableUtil.formatTable(" ID", 4);
         String isbn = TableUtil.formatTable(" ISBN", 22);
         String title = TableUtil.formatTable(" Title", 28);
@@ -165,9 +131,60 @@ public class BookMenu {
 
         String headerDivider = "|";
         System.out.println(DOTTED_DIVIDER);
+
+        // Print the header with the dividers
         for (String header : headers) {
             System.out.print(headerDivider + header);
         }
         System.out.println(headerDivider + "\n" + DOTTED_DIVIDER);
+    }
+
+    public static void validateId(String id, Scanner scanner, List<Book> bookList) {
+        while (true) {
+            if (id.isBlank()) {
+                System.out.println("ID cannot be blank. Please enter a valid ID:");
+                id = scanner.nextLine();
+                continue;
+            }
+
+            boolean isUnique = true;
+            for (Book book : bookList) {
+                if (id.equals(book.getId())) {
+                    System.out.println("ID must be unique. Please enter a different ID:");
+                    id = scanner.nextLine();
+                    isUnique = false;
+                    break;
+                }
+            }
+
+            if (isUnique) {
+                break;
+            }
+        }
+    }
+
+    public static void isbnValidation(String isbn, Scanner scanner, List<Book> bookList) {
+        while (true) {
+            boolean isUnique = true;
+
+            for (Book book : bookList) {
+                if (isbn.equals(book.getIsbn())) {
+                    System.out.println("ISBN has to be unique.");
+                    isbn = scanner.nextLine();
+                    isUnique = false;
+                    break;
+                }
+            }
+
+            if (isbn.length() != 10) {
+                System.out.println("ISBN should contain exactly 10 characters. Please enter a valid ISBN:");
+                isbn = scanner.nextLine();
+                continue;
+            }
+
+            if (isUnique) {
+                break;
+            }
+        }
     }
 }

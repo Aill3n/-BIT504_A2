@@ -13,6 +13,7 @@ public class Member {
     private String LastName;
     private int age;
     
+    // Constructor
     public Member(String id, String firstName, String lastName, int age) {
         Id = id;
         this.firstName = firstName;
@@ -20,6 +21,7 @@ public class Member {
         this.age = age;
     }
 
+    // Getters and Setters
     public String getId() {
         return Id;
     }

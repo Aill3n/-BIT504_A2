@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileReader {
-    // Use Singleton - A singleton design pattern has been used for the methods involved in reading files.
+    // Singleton Design Pattern applied
     private static FileReader instance;
     
     private FileReader() {}
@@ -29,10 +29,11 @@ public class FileReader {
 
     public List<Book> readBookFile() throws Exception {
 
-        List<Book> books = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
         File file = new File(BOOK_FILE_PATH);
 
         try (Scanner sc = new Scanner(file)) {
+            // Split items separated by a comma, add them to the bookList
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 String[] bookData = line.split(",");
@@ -44,19 +45,21 @@ public class FileReader {
                 String genre = bookData[5].trim();
                 int ageRating = Integer.parseInt(bookData[6].trim());
 
+                // Create book objects
                 Book book = new Book(id, isbn, title, author, dateOfPublication, genre, ageRating);
 
-                books.add(book);
+                // Add the items to the List 
+                bookList.add(book);
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
         }
-        return books;
+        return bookList;
     }
 
     public List<Member> readMemberFile() throws FileNotFoundException {
 
-        List<Member> members = new ArrayList<>();
+        List<Member> memberList = new ArrayList<>();
         File file = new File(MEMBER_FILE_PATH);
 
         try (Scanner sc = new Scanner(file)) {
@@ -68,13 +71,15 @@ public class FileReader {
                 String lastName = memberData[2].trim();
                 int age = Integer.parseInt(memberData[3].trim());
 
+                // Create member objects
                 Member member = new Member(id, firstName, lastName, age);
 
-                members.add(member);
+                // Add members to the list
+                memberList.add(member);
             }
         } catch (IOException e) {
             System.out.println("Error reading the file: " + e.getMessage());
         }
-        return members;
+        return memberList;
     }
 }

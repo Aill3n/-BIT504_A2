@@ -6,64 +6,64 @@ Student ID: 2021712
 
 package librarySystem;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-    // What design patter to use for the menus?
-    // Validation for errors
-
+    // Create a list for book objects
     private static List<Book> BookList = new ArrayList<>();
+
+    // Create a list for Member objects
     private static List<Member> MemberList = new ArrayList<>();
 
     public static void main(String[] args) {
-
+        // Read the book file
         try {
             BookList = FileReader.getInstance().readBookFile();
             FileReader.getInstance().readBookFile();
         } catch (Exception e) {
             System.out.println("There was an issue reading the files.");
-            e.printStackTrace();
         }
 
+        // Read the member file
         try {
             MemberList = FileReader.getInstance().readMemberFile();
             FileReader.getInstance().readMemberFile();
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             System.out.println("There was an issue reading the files.");
-            e.printStackTrace();
         }
 
         loadMainMenu();
     }
 
-    // TODO: Aillen search how to add design patterns
     public static void loadMainMenu() {
 
+        // Loads the main menu and links to its sub-menus
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 clearConsole();
-                MainMenu.printMainMenu();
+                MenuText.printMainMenu();
 
                 int choice = inputValidation(scanner);
 
                 switch (choice) {
                     case 1 -> {
-                        MainMenu.printBookManagementMenu();
+                        MenuText.printBookManagementMenu();
                         loadBookManagementMenu(scanner);
                     }
                     case 2 -> {
-                        MainMenu.printMemberManagementMenu();
+                        MenuText.printMemberManagementMenu();
                         loadMemberManagementMenu(scanner);
                     }
                     case 3 -> {
-                        MainMenu.printLoanManagementMenu();
+                        MenuText.printLoanManagementMenu();
                         loadLoanManagementMenu(scanner);
                     }
                     case 4 -> {
-                        MainMenu.printSearchMenu();
+                        MenuText.printSearchMenu();
                         loadSearchMenu(scanner);
                     }
                     case 5 -> {
@@ -76,6 +76,7 @@ public class Main {
         }
     }
 
+    // Present and controls the Book Management Menu
     private static void loadBookManagementMenu(Scanner scanner) {
         while (true) {
 
@@ -86,25 +87,26 @@ public class Main {
                 case 1 -> {
                     System.out.println("Displaying all the books in the system.");
                     BookMenu.displayAllBooks(BookList);
-                    MainMenu.printBookManagementMenu();
+                    MenuText.printBookManagementMenu();
 
                 }
                 case 2 -> {
                     System.out.println("Displaying all the borrowed books in the system.");
                     BookMenu.displayBorrowedBooks(BookList);
-                    MainMenu.printBookManagementMenu();
+                    MenuText.printBookManagementMenu();
 
                 }
 
                 case 3 -> {
                     System.out.println("Displaying all the unborrowed books in the system.");
                     BookMenu.displayUnborrowedBooks(BookList);
-                    MainMenu.printBookManagementMenu();
+                    MenuText.printBookManagementMenu();
                 }
 
                 case 4 -> {
                     System.out.println("Displaying 'Add a new Book' menu.");
                     BookMenu.addNewBook(BookList, scanner);
+                    MenuText.printBookManagementMenu();
                 }
 
                 case 5 -> {
@@ -118,6 +120,7 @@ public class Main {
         }
     }
 
+    // Present and controls the Member Management Menu
     private static void loadMemberManagementMenu(Scanner scanner) {
         while (true) {
 
@@ -127,12 +130,12 @@ public class Main {
                 case 1 -> {
                     System.out.println("Displaying all the members in the system.");
                     MemberMenu.displayAllMembers(MemberList);
-                    MainMenu.printMemberManagementMenu();
+                    MenuText.printMemberManagementMenu();
                 }
                 case 2 -> {
                     System.out.println("Displaying add a member menu.");
                     MemberMenu.addNewMember(MemberList, scanner);
-                    MainMenu.printMemberManagementMenu();
+                    MenuText.printMemberManagementMenu();
                 }
                 case 3 -> {
                     System.out.println("Returning to the main menu.");
@@ -145,6 +148,7 @@ public class Main {
         }
     }
 
+    // Present and controls the Loan Management Menu
     private static void loadLoanManagementMenu(Scanner scanner) {
         while (true) {
 
@@ -154,12 +158,12 @@ public class Main {
                 case 1 -> {
                     System.out.println("\n Displaying the menu 'Check out a book'. \n");
                     LoanManagementMenu.checkOutBook(BookList, MemberList, scanner);
-                    MainMenu.printLoanManagementMenu();
+                    MenuText.printLoanManagementMenu();
                 }
                 case 2 -> {
                     System.out.println("\n Displaying the menu 'Check in a book'. \n");
                     LoanManagementMenu.checkInBook(BookList, MemberList, scanner);
-                    MainMenu.printLoanManagementMenu();
+                    MenuText.printLoanManagementMenu();
                 }
                 case 3 -> {
                     System.out.println("Returning to the main menu.");
@@ -172,6 +176,7 @@ public class Main {
         }
     }
 
+    // Present and controls the Search Menu
     private static void loadSearchMenu(Scanner scanner) {
         while (true) {
 
@@ -181,13 +186,13 @@ public class Main {
                 case 1 -> {
                     System.out.println("\nDisplaying the 'Find a Member' menu. \n");
                     SearchMenu.searchMember(MemberList, BookList, scanner);
-                    MainMenu.printSearchMenu();
+                    MenuText.printSearchMenu();
 
                 }
                 case 2 -> {
                     System.out.println("\nDisplaying the menu 'Find a book menu'. \n");
                     SearchMenu.searchBook(BookList, MemberList, scanner);
-                    MainMenu.printSearchMenu();
+                    MenuText.printSearchMenu();
                 }
                 case 3 -> {
                     System.out.println("Returning to the main menu.");
@@ -200,17 +205,19 @@ public class Main {
         }
     }
 
+    // Clear the console - used for after returning to the main menu
     public static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    // Validates the input of the user for the menus
     public static int inputValidation(Scanner scanner){
-        int validInput = -1;
+        int validInput = 0;
         boolean valid = false;
         
         while (!valid){
-            System.out.println("Please enter a menu number:");
+            System.out.println("\nPlease enter a menu number:");
             if (scanner.hasNextInt()) {
                 validInput = scanner.nextInt();
                 valid = true; 

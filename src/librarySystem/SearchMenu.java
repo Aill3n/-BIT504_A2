@@ -5,25 +5,30 @@ import java.util.Scanner;
 
 public class SearchMenu {
 
+    // Search for a member
     public static void searchMember(List<Member> memberList, List<Book> bookList, Scanner scanner) {
         System.out.println("Enter a member's last name: \n");
         String lastName = scanner.nextLine();
         boolean memberFound = false;
 
+        // Validates that name is not empty
         if (lastName.isEmpty()) {
             System.out.println("Please enter a valid last name.");
             return;
         }
 
+        // Match the content entered with the members, comparing lower case and trimming spaces
         for (Member member : memberList) {
             if (member.getLastName().toLowerCase().contains(lastName.trim().toLowerCase())) {
                 memberFound = true;
+                // Print the details of the member found
                 System.out.println("Member Details:");
                 System.out.println("\n- First name: " + member.getFirstName());
                 System.out.println("- Last name: " + member.getLastName());
                 System.out.println("- Age: " + member.getAge());
 
-                boolean bookFound = false; // Reset bookFound for each member
+                // Search if the member has borrowed a book
+                boolean bookFound = false;
                 for (Book book : bookList) {
                     if (book.getBorrowedByMemberId() != null && book.getBorrowedByMemberId().equals(member.getId())) {
                         bookFound = true;
@@ -41,21 +46,28 @@ public class SearchMenu {
         }
     }
 
+    // Responsible for the Search Book logic
     public static void searchBook(List<Book> bookList, List<Member> memberList, Scanner scanner) {
 
         System.out.println("Enter the title of a book: \n");
         String bookTitle = scanner.nextLine();
         boolean bookFound = false;
 
+        // Validate title is not empty
         if (bookTitle.isEmpty()) {
             System.out.println("Please enter a valid title.");
             return;
         }
 
+        // Loop through the books that are in the bookList
         for (Book book : bookList) {
+            // Filter for titles that match
             if (book.getTitle().toLowerCase().contains(bookTitle.trim().toLowerCase())) {
                 bookFound = true;
+                // Print the book information
                 printBookInformation(book);
+
+                // Search if a member has borrowed the book
                 boolean memberFound = false;
                 for (Member member : memberList) {
                     if (book.getBorrowedByMemberId() != null && book.getBorrowedByMemberId().equals(member.getId())) {
