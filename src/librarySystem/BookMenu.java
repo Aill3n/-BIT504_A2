@@ -41,7 +41,6 @@ public class BookMenu {
     }
 
     public static void displayBorrowedBooks(List<Book> bookList) {
-        System.out.println("Displaying all the borrowed books in the system.");
 
         // Filters for only books that have been borrowed
         List<Book> borrowedBooks = bookList.stream().filter(Book::isBorrowed).toList();
@@ -55,7 +54,6 @@ public class BookMenu {
     }
 
     public static void displayUnborrowedBooks(List<Book> bookList) {
-        System.out.println("Displaying all the unborrowed books in the system.");
 
         // Filters for books that have not been borrowed
         List<Book> borrowedBooks = bookList.stream().filter(book -> !book.isBorrowed()).toList();

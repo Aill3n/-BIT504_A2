@@ -85,36 +85,36 @@ public class Main {
 
             switch (choice) {
                 case 1 -> {
-                    System.out.println("Displaying all the books in the system.");
+                    System.out.println("Displaying all the books in the system.\n");
                     BookMenu.displayAllBooks(BookList);
                     MenuText.printBookManagementMenu();
 
                 }
                 case 2 -> {
-                    System.out.println("Displaying all the borrowed books in the system.");
+                    System.out.println("Displaying all the borrowed books in the system.\n");
                     BookMenu.displayBorrowedBooks(BookList);
                     MenuText.printBookManagementMenu();
 
                 }
 
                 case 3 -> {
-                    System.out.println("Displaying all the unborrowed books in the system.");
+                    System.out.println("Displaying all the unborrowed books in the system.\n");
                     BookMenu.displayUnborrowedBooks(BookList);
                     MenuText.printBookManagementMenu();
                 }
 
                 case 4 -> {
-                    System.out.println("Displaying 'Add a new Book' menu.");
+                    System.out.println("Displaying 'Add a new Book' menu.\n");
                     BookMenu.addNewBook(BookList, scanner);
                     MenuText.printBookManagementMenu();
                 }
 
                 case 5 -> {
-                    System.out.println("Returning to the main menu.");
+                    System.out.println("Returning to the main menu.\n");
                     return;
                 }
                 default -> {
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("Invalid choice. Please try again.\n");
                 }
             }
         }
@@ -156,21 +156,21 @@ public class Main {
 
             switch (subMenuChoice) {
                 case 1 -> {
-                    System.out.println("\n Displaying the menu 'Check out a book'. \n");
+                    System.out.println("\nDisplaying the menu 'Check out a book'. \n");
                     LoanManagementMenu.checkOutBook(BookList, MemberList, scanner);
                     MenuText.printLoanManagementMenu();
                 }
                 case 2 -> {
-                    System.out.println("\n Displaying the menu 'Check in a book'. \n");
+                    System.out.println("\nDisplaying the menu 'Check in a book'. \n");
                     LoanManagementMenu.checkInBook(BookList, MemberList, scanner);
                     MenuText.printLoanManagementMenu();
                 }
                 case 3 -> {
-                    System.out.println("Returning to the main menu.");
+                    System.out.println("\nReturning to the main menu.\n");
                     return;
                 }
                 default -> {
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.\n");
                 }
             }
         }
@@ -195,11 +195,11 @@ public class Main {
                     MenuText.printSearchMenu();
                 }
                 case 3 -> {
-                    System.out.println("Returning to the main menu.");
+                    System.out.println("\nReturning to the main menu.\n");
                     return;
                 }
                 default -> {
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.\n");
                 }
             }
         }
